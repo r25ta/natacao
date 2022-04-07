@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+		<table>
+			<tr th:each="campeonato : ${campeonatos}">
+				<td th:text="${campeonato.id}"></td>
+				<td th:text="${campeonato.nome}"></td>
+				<td th:text="${campeonato.dtInclu}"></td>
+			</tr>
+		</table>
+
+	</section>
+</body>
+</html>

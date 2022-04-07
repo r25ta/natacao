@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+		<table>
+			<tr th:each="categoria : ${categorias}">
+				<td th:text="${categoria.id}"></td>
+				<td th:text="${categoria.nome}"></td>
+				<td th:text="${categoria.dtInclu}"></td>
+			</tr>
+		</table>
+
+	</section>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="containe-fluid">
+				<i class="oi oi-caret-right"></i> <span>Cadastrar Atleta</span>
+			</div>
+			<div class="mx-auto">
+				<a class="btn btn-primary btn-sm" href="/atleta/listar"
+					role="button"> <span class="oi oi-spreadsheet"
+					title="Listar Atletas" aria-hidden="true"></span> <span>Listar
+						Atletas</span>
+				</a>
+
+			</div>
+
+		</nav>
+
+
+		<div class="container" id="cadastroAtleta">
+			<form id="atletaForm"
+				th:action="${atletaDTO.id == null} ? @{/atleta/salvar} : @{/atleta/editar}"
+				th:object="${atletaDTO}" method="post">
+				<div class="form-row">
+					<div class="row">
+						<div class="col col-md-5">
+							<div class="input-group input-group-sm mb-5">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-nome">Nome</span>
+								</div>
+								<input type="text" class="form-control" id="nome"
+									placeholder="Inserir nome do atleta" name="nome"
+									required="required" th:field="*{nome}"> <span
+									th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Campo
+									nome não pode ser nulo</span>
+							</div>
+						</div>
+						<div class="col col-md-5">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-apelido">Apelido</span>
+								</div>
+								<input type="text" class="form-control" id="apelido"
+									placeholder="Inserir apelido do atleta" name="apelido"
+									th:field="*{apelido}">
+							</div>
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col col-md-4">
+							<div class="input-group input-group-sm mb-5">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-dtNascimento">Dt.
+										Nascimento</span>
+								</div>
+								<input type="date" class="form-control" id="dtNascimento"
+									placeholder="Inserir data de nascimento" name="dtNascimento"
+									required="required" th:field="*{dtNascimento}"> <span
+									th:if="${#fields.hasErrors('dtNascimento')}"
+									th:errors="*{dtNascimento}">Campo Data Nascimento não
+									pode ser nulo</span>
+							</div>
+						</div>
+						<div class="col col-md-3">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sexo">Sexo</span>
+								</div>
+
+								<select id="selectSexo" th:name="sexo">
+									<option th:if="${atletaDTO.id!=null}" th:value="*{sexo}" th:text="*{sexo}"></option>
+									<option th:unless="${atletaDTO.id!=null}" disabled="disabled" selected value="">Selecione</option>
+									
+									<option
+										th:each="sexoAtleta : ${T(br.com.natacao.model.Sexo).values()}"
+										th:value="${sexoAtleta}" th:text="${sexoAtleta}">
+									</option>
+
+								</select> <span th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}">Campo
+									sexo deve ser preenchido</span>
+
+							</div>
+						</div>
+						<div class="col col-md-3">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-categoria">Categoria</span>
+								</div>
+ 								<div  id="select" >
+								<select th:id="selectCategoria" th:name="categoriaAtleta.id">
+									<option th:if="${atletaDTO.id != null}" 
+										th:value="*{categoriaAtleta.id}" th:text="*{categoriaAtleta.nome}"
+										th:selected="*{categoriaAtleta.id}">
+										
+									</option>
+									<option th:unless="${atletaDTO.id!=null}"disabled="disabled" selected value="">Selecione</option>
+									
+									<option th:each="categoria : ${categorias}"
+										th:value="${categoria.id}" th:text="${categoria.nome}">
+										
+									</option>
+ 
+								</select>
+								</div> 
+<!-- 								
+									<span th:if="${#fields.hasErrors('idCategoria')}"
+									th:errors="*{idCategoria}">Campo categoria deve ser
+									preenchido</span>
+ -->
+							</div>
+						</div>
+					</div>
+					<div>
+					
+						<input type="hidden" id="id"  th:field="*{id}">
+
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary btn-sm"
+					data-toogle="tootip" title="Salvar informações do atleta.">Salvar
+				</button>
+			</form>
+
+
+
+		</div>
+	</section>
+
+</body>
+
+</html>

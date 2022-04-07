@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<title>Natação</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<!-- Bootstrap CSS -->
+<!-- Bootstrap core CSS -->
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css}"
+	rel="stylesheet" />
+
+<link href="/css/spring-2a2d595e6ed9a0b24f027f2b63b134d6.css" />
+
+</head>
+<body>
+	<a href="../atleta/"><h2>Atleta</h2></a>
+
+	<br />
+	<div id="mensagem" th:text="${param}?${param.mensagem}:''">Mensagem</div>
+
+	<div id="divAddAtleta">
+		<span>Editar atleta</span> <br /> <br />
+		<form id="atletaForm" th:action="@{../atleta/salvar}" th:object="${atleta}" method="post">
+			<div class="form-row">
+				<div class="form-group col-md-4">
+
+					<div class="input-group input-group-sm mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-nome">Nome</span>
+						</div>
+						<input type="text" class="form-control" id="nome"
+							placeholder="Inserir nome do atleta" name="nome"
+							required="required" th:field="*{nome}">
+					</div>
+				</div>
+				<div class="form-group col-md-3">
+					<div class="input-group input-group-sm mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-apelido">Apelido</span>
+						</div>
+						<input type="text" class="form-control" id="apelido"
+							placeholder="Inserir apelido do atleta" name="apelido" th:filed="*{apelido}">
+					</div>
+				</div>
+
+				<div class="form-group col-md-3">
+					<div class="input-group input-group-sm mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-dtNascimento">Dt.
+								Nascimento</span>
+						</div>
+						<input type="date" class="form-control" id="dtNascimento"
+							placeholder="Inserir data de nascimento" name="dtNascimento"
+							required="required" th:field="*{dtNascimento}">
+					</div>
+				</div>
+
+				<div class="form-group col-md-1">
+					<div class="input-group input-group-sm mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sexo">Sexo</span>
+						</div>
+
+						<select id="sexo" th:name="sexo" th:field="*{sexo}">
+							<option th:each="sexoAtleta : ${T(br.com.natacao.model.Sexo).values()}" 
+									th:value="${sexoAtleta}" 
+									th:text="${sexoAtleta}">
+							</option>
+							
+						</select>
+						<!-- 
+						<input type="text" class="form-control" id="sexo"
+							placeholder="Inserir sexo" name="sexo" required="required" th:field="*{sexo}">
+						-->
+					</div>
+				</div>
+
+				<input type="hidden" id="id" name="id" th:field="*{id}">
+
+			</div>
+
+			<button type="submit" class="btn btn-primary btn-sm"
+				data-toogle="tootip" title="Salvar informações do atleta.">Salvar</button>
+		</form>
+	</div>
+</body>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-mask-plugin/dist/jquery.mask.min.js}"></script>
+<script
+	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+	    
+		$(function() {
+			$('[data-toggle="popover"]').popover();
+		});
+		
+		$(document).ready(function(){
+		    $(".navbar-toggle").click(function(){
+		        $(".sidebar").toggleClass("sidebar-open");
+		    })
+		});
+
+	function excluir(id,nome){
+		console.log("Funcao Excluir");
+		console.log("id atleta: " + id);
+		console.log("nome atleta: " + nome);
+		location.href="../atleta/excluir?id="+id+"&nome="+nome;
+	}
+	function editar(id){
+		console.log("Funcao Editar");
+		console.log("id atleta "+ id);
+		location.href="../atleta/editar?id="+id;
+	}
+	
+	function mostra_oculta(param){
+	
+	    var x = document.getElementById(param);
+	    if (x.style.display === "none") {
+	        x.style.display = "block";
+	    } else {
+	        x.style.display = "none";
+	    }
+	
+	}
+
+</script>
+
+</html>

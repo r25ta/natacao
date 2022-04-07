@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+		<table>
+			<tr th:each="modalidade : ${modalidades}">
+				<td th:text="${modalidade.id}"></td>
+				<td th:text="${modalidade.nome}"></td>
+				<td
+					th:text="${#dates.format(modalidade.dtInclu,@environment.getProperty('spring.jackson.date-format'))}"></td>
+			</tr>
+		</table>
+
+	</section>
+
+</body>
+</html>

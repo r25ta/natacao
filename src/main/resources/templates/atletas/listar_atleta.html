@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+	<div id="gridAtleta" th:unless="${#lists.isEmpty(atletas)}">
+		
+		
+				<nav class="navbar navbar-expand-md bg-light">
+			<div class="containe-fluid">
+				<i class="oi oi-caret-right"></i> <span>Cadastrar Atleta</span>
+			</div>
+			<div class="mx-auto">
+				<a class="btn btn-primary btn-sm" href="/atleta/listar"
+					role="button"> <span class="oi oi-plus"
+					title="Cadastrar Atleta" aria-hidden="true"></span> <span>Cadastrar
+						Atleta</span>
+				</a>
+
+			</div>
+
+		</nav>
+
+		
+		
+		
+		
+			<br />
+			<div id="mensagem" th:text="${mensagem}">Mensagem</div>
+		
+	
+		<br />
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover" id="tableAtleta">
+				<caption>Atletas cadastrados</caption>
+				<thead class="table-dark">
+					<tr>
+						<th scope="col">
+							<button type="button" class="btn" data-toogle="tooltip"
+								title="Cadastrar novo Atleta"
+								onclick="mostra_oculta('divAddAtleta')">
+								<img src="../images/person-plus.svg">
+							</button>
+						</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Apelido</th>
+						<th scope="col">Data Nascimento</th>
+						<th scope="col">Sexo</th>
+						<th scope="col">Categoria</th>
+						<th scope="col">Data Inclusão</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="atleta : ${atletas}">
+						<td th:text="${atleta.id}"></td>
+						<td th:text="${atleta.nome}"></td>
+						<td th:text="${atleta.apelido}"></td>
+						<td
+							th:text="${#calendars.format(atleta.dtNascimento,'dd/MM/yyyy')}"></td>
+						<td th:text="${atleta.sexo}"></td>
+						<td th:text="${atleta.categoriaAtleta.nome}"></td>
+						<td
+							th:text="${#calendars.format(atleta.dtInclu,'dd/MM/yyyy HH:mm')}"></td>
+						<td><span id="editAtleta">
+								<a class="button btn-info btn-sm" th:href="@{/atleta/editar/{id} (id=${atleta.id})} ">
+									<span class="oi oi-brush" title="Editar Atleta" aria-hidden="true"></span>
+								</a>
+								<!-- 
+								<button id="btnEditAtleta" type="button" class="btn"
+									data-toogle="tooltip" title="Editar informações do atleta."
+									th:onclick="|editar(${atleta.id})|">
+									<img style="height: 20px; width: 20px;"
+										src="../images/pencil.svg" alt="Editar Atleta">
+								</button>
+								-->
+						</span> <span id="delAtleta"> <!-- 
+								<button id="btnDelAtleta" type="button" class="btn" data-toogle="tooltip" title="Excluir informações do atleta." th:onclick="excluir([[${atleta.id}]],[[${atleta.nome}]])">
+									<img style="height: 20px; width: 20px;" alt="" src="../images/trash.svg">
+								</button>
+								 -->
+
+								<button id="btnExcluirAtleta" type="button" class="btn"
+									data-bs-toggle="modal"
+									th:attr="data-bs-target='#modalExcluir_id='+*{atleta.id}">
+									<img style="height: 20px; width: 20px;" alt="Excluir Atleta"
+										src="../images/trash.svg">
+								</button>
+						</span></td>
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+	</section>
+</body>
+<script type="text/javascript">
+	    
+	function excluir(id,nome){
+		console.log("Funcao Excluir");
+		console.log("id atleta: " + id);
+		console.log("nome atleta: " + nome);
+		location.href="../atleta/excluir?id="+id+"&nome="+nome;
+	}
+	
+	function editar(id){
+		console.log("Funcao Editar");
+		console.log("id atleta "+ id);
+		location.href="../atleta/editar/"+id;
+	}
+	
+	function verifica_valor(param){
+		var x = document.getElementById(param);
+		console.log("obj => "+x.value);
+
+		if(x.value === null ){
+			console.log("Selecionar opção no combo");
+			alert("Selecione uma opção no combo");
+		}	
+	}
+	
+	function mostra_oculta(param){
+	    var x = document.getElementById(param);
+	    if (x.style.display === "none") {
+	        x.style.display = "block";
+	    } else {
+	        x.style.display = "none";
+	    }
+	
+	}
+
+</script>
+
+</html>
