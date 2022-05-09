@@ -5,9 +5,9 @@
 package br.com.natacao.service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public class AtletaService {
 	
 	//ATRIBUTO READONLY = TRUE DEVE SER UTILIZADO PARA OPERAÇÕES DE LEITURA
 	@Transactional(readOnly = true)
-	public Atleta findByNomeAndDtNasc(String nome, Date dtNasc) {
+	public Atleta findByNomeAndDtNasc(String nome, LocalDate dtNasc) {
 		
 		Atleta atleta = atletaRepository.findByNomeAndDtNasc(nome, dtNasc);
 		

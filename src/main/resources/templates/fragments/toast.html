@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+</head>
+<body>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" th:fragment="toast">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="../images/olimpycs_13_icon-icons.com_68627.png" style="width: 25px; height: 25px" class="rounded me-2" alt="...">
+      <strong class="me-auto">Notificação</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div th:text="${mensagem}"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -20,7 +20,7 @@
 
 package br.com.natacao.repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -45,7 +45,7 @@ public interface AtletaRepository extends CrudRepository<Atleta, Long> {
 				+" WHERE a.atleta_id = b.id_atleta"
 				+" AND UPPER(a.NOME_ATLETA) = UPPER(:nome)"
 				+" AND a.DTNASC_ATLETA = :dtNasc")
-	Atleta findByNomeAndDtNasc(@Param("nome") String nome, @Param("dtNasc") Date dtNasc);
+	Atleta findByNomeAndDtNasc(@Param("nome") String nome, @Param("dtNasc") LocalDate dtNasc);
 
 	@Query(nativeQuery = true
 		   , value = "SELECT atleta_id"

@@ -46,6 +46,7 @@
 	<script th:src="@{/webjars/jquery-mask-plugin/dist/jquery.mask.min.js}"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/atleta.js}"></script>
 	<script type="text/javascript">
 	
 		var url = '';
@@ -68,26 +69,6 @@
 		    })
 		});
 
-
-	function verifica_valor(param){
-		var x = document.getElementById(param);
-		console.log("obj => "+x.value);
-
-		if(x.value === null ){
-			console.log("Selecionar opção no combo");
-			alert("Selecione uma opção no combo");
-		}	
-	}
-	
-	function mostra_oculta(param){
-	    var x = document.getElementById(param);
-	    if (x.style.display === "none") {
-	        x.style.display = "block";
-	    } else {
-	        x.style.display = "none";
-	    }
-	
-	}
 
 	</script>
 </body>

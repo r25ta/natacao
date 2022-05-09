@@ -1,10 +1,7 @@
 package br.com.natacao.br.controller.dto;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -28,8 +25,7 @@ public class AtletaDTO implements Serializable {
 	private Sexo sexo;
 
 	@DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
-	private Date dtNascimento;
+	private LocalDate dtNascimento;
 	private CategoriaDTO categoriaAtleta;
 	
 	

@@ -6,7 +6,7 @@ package br.com.natacao.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -69,8 +67,7 @@ public class Atleta implements Serializable{
 	@Setter
 	@NotNull(message = "Campo data nascimento atleta obrigatorio!")
 	@DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
-	private Date dtNascimento;
+	private LocalDate dtNascimento;
 	
 	@Column(name="dtinclu_atleta", nullable = false, columnDefinition = "TIMESTAMP")
 	@Getter
@@ -87,7 +84,7 @@ public class Atleta implements Serializable{
 				, inverseJoinColumns = @JoinColumn(name="id_categoria"))
 	private Categoria categoriaAtleta;
 	
-	public Atleta(String nome, String apelido, Sexo sexo, Date dtNascimento, Categoria categoriaAtleta, Timestamp dtInclu){
+	public Atleta(String nome, String apelido, Sexo sexo, LocalDate dtNascimento, Categoria categoriaAtleta, Timestamp dtInclu){
 		this.nome = nome;
 		this.apelido = apelido;
 		this.sexo = sexo;

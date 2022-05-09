@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.natacao.br.controller.dto.AtletaDTO;
 import br.com.natacao.br.controller.dto.CategoriaDTO;
@@ -53,7 +52,6 @@ public class AtletaController implements WebMvcConfigurer{
 			Atleta atleta = convertDtoToModel(atletaDTO);
 			
 		}
-		
 		List<Categoria> categorias = categoriaService.findAll();
 		modelMap.addAttribute("categorias", categorias);
 		return "/atletas/cadastrar_atleta";
@@ -63,16 +61,12 @@ public class AtletaController implements WebMvcConfigurer{
 	public String listar(ModelMap modelMap) {
 		List<Atleta> lstAtleta = atletaService.findAll();
 		List<AtletaDTO> lstAtletaDTO = lstAtleta.stream().map( atleta -> new AtletaDTO(atleta) ).collect(Collectors.toList());
-		
-		
-		
 		modelMap.addAttribute("atletas",lstAtletaDTO);
 		return "/atletas/listar_atleta";
 	}
 	
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") long id, ModelMap modelMap) {
-		
 		Atleta atleta = atletaService.findById(id);
 		List<Categoria> categorias = categoriaService.findAll();
 		modelMap.addAttribute("categorias", categorias);
@@ -83,7 +77,6 @@ public class AtletaController implements WebMvcConfigurer{
 	
 	@PostMapping("/editar")
 	public String editar(AtletaDTO atletaDTO) {
-
 		//RECUPERA INFORMAÇÕES DA CATEGORIA
 		Categoria cat = categoriaService.getById(atletaDTO.getCategoriaAtleta().getId());
 		atletaDTO.setCategoriaAtleta(new CategoriaDTO(cat));
@@ -92,11 +85,9 @@ public class AtletaController implements WebMvcConfigurer{
 		
 		atletaService.save(atleta);		
 		
-		return "redirect:/atleta/cadastrar";
+		return "redirect:/atleta/listar";
 	}
-	
-	
-	
+
 	@GetMapping("/")
 	public ModelAndView index(ModelMap modelMap){
 		List<Atleta> lstAtleta = atletaService.findAll();
@@ -121,11 +112,10 @@ public class AtletaController implements WebMvcConfigurer{
 		
 		if(at!=null) {
 			LOGGER.info("ATLETA JÁ CADASTRADO!");			
+	
 		}
 		else {
-			
 			Atleta atleta = convertDtoToModel(atletaDTO);
-			
 			LOGGER.info("Gravar Atleta na base de dados!");
 			atletaService.save(atleta);
 	
@@ -135,27 +125,21 @@ public class AtletaController implements WebMvcConfigurer{
 	}
 	
 	@GetMapping(value="/excluir")
-	@ResponseBody
-	public RedirectView excluir(ModelMap modelMap
+	public String excluir(RedirectAttributes redirectAttributes
 								, @RequestParam(name="id") long id
 								, @RequestParam(name="nome") String nome) {
-		RedirectView redirect = new RedirectView();
-		redirect.setContextRelative(true);
-		redirect.setUrl("/atletas/cadastrar_atleta/");
-		//atletaService.delete(id);
+		atletaService.delete(id);
 		
-		modelMap.addAttribute("mensagem", "Atleta ".concat(nome).concat(" excluido com sucesso!"));
-		redirect.setAttributesMap(modelMap);
-		LOGGER.info("Atleta " + nome +" excluido com sucesso!");
+		redirectAttributes.addFlashAttribute("mensagem", "Atleta ".concat(nome).concat(" excluido definitivamente!"));
 		
-		return redirect;
-				
+		LOGGER.info("Atleta " + nome +" excluido definitivamente!");
+		
+		return "redirect:/atleta/listar";
+		
 	}
-	
-	
 	private Atleta convertDtoToModel(AtletaDTO atletaDTO) {
 		Atleta atletaModel = new Atleta(atletaDTO);
-		
+
 		return atletaModel;
 	
 	}
